@@ -1,59 +1,34 @@
 class Solution {
 public:
     string sortVowels(string s) {
-        vector<int>lower(26,0);
-        vector<int>upper(26,0);
+        vector<char>a;
+        
+        int index=0;
+        //select the vowel from the string
         for(int i=0;i<s.size();i++)
         {
-            //lower case a,e,o,i,u;
-            if(s[i]=='a'||s[i]=='e'||s[i]=='i'||s[i]=='o'||s[i]=='u')
+            if(s[i]=='A'||s[i]=='E'||s[i]=='I'||s[i]=='O'||s[i]=='U'||s[i]=='a'||s[i]=='e'||s[i]=='i'||s[i]=='o'||s[i]=='u')
             {
-                lower[s[i]-'a']++;
-                s[i]='@';
-            }
-            //lower case A,E,I,O,U;
-           else if(s[i]=='A'||s[i]=='E'||s[i]=='I'||s[i]=='O'||s[i]=='U')
-            {
-                upper[s[i]-'A']++;
-               s[i]='@';
+                a.push_back(s[i]);
+                s[i]='_';
+                index++;
             }
         }
-        string ans;
-        //upper
-        for(int i=0;i<26;i++)
-        {
-            char c='A'+i;
-            while(upper[i])
-            {
-                ans+=c;
-                upper[i]--;
-                
-            }
-        }
-        //lower
-         for(int i=0;i<26;i++)
-        {
-            char c='a'+i;
-            while(lower[i])
-            {
-                ans+=c;
-                lower[i]--;
-                
-            }
-        }
+        //sort the vowel according to their ascii value
+           sort(a.begin(),a.end());
+        //insert the vowel at their correct position
          int first=0,second=0 ;
-        while(second<ans.size())
+        while(second<a.size())
         {
-            if(s[first]=='@')
+            if(s[first]=='_')
              {
-                s[first]=ans[second];
+                s[first]=a[second];
                 second++;
             }
             first++;
         }
         
        return s;
-       
         
     }
 };
