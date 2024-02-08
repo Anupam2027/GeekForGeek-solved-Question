@@ -7,17 +7,21 @@ public:
         {
             if(s[i]=='(')
             {
-                st.push(s[i]);
+                st.push(s[i]); 
+                continue;
             }
-            
+            if(st.empty())
+            {
+                count++;
+                continue;
+            } 
+            if(s[i]==')' && st.top()=='(')
+                st.pop();
             else
             {
-                if(st.empty())
-                    count++;
-                else
-                    st.pop();
+               count++;
             }
-            
+                
         } 
         return st.size()+count;
     }
