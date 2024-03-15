@@ -100,21 +100,39 @@ class Solution{
     vector<int> preOrder(Node* root)
     {
         vector<int>v;
-        if(!root)
-        return v;
-        stack<Node *>st;
-        st.push(root);
-        while(!st.empty())
+        while(root)
         {
-            Node *temp=st.top();
-            st.pop();
-            v.push_back(temp->data);
-            if(temp->right)
-            st.push(temp->right);
-            if(temp->left)
-            st.push(temp->left);
-            
+            //if root's left part is not exist
+            if(!root->left)
+            {
+                v.push_back(root->data);
+                root=root->right;
+            }
+            //if root's left part is exist
+            else
+            {
+                Node * curr=root->left;
+                while(curr->right && curr->right!=root)
+                {
+                    curr=curr->right;
+                }
+                //left subtree traverse or not
+                //if not traverse
+                if(curr->right==NULL)
+                {
+                    v.push_back(root->data);
+                    curr->right=root;
+                    root=root->left;
+                }
+                //if traverse
+                else
+                {
+                    curr->right=NULL;
+                    root=root->right;
+                }
+            }
         }
+        return v;
     }
 };
 
