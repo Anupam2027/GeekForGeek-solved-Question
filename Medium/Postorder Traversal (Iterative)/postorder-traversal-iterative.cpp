@@ -97,21 +97,42 @@ struct Node {
 class Solution{
     public:
     vector<int> postOrder(Node* root) {
+        //use NRL concept
+        //node
+        //left
+        //right
         vector<int>v;
-        if(!root)
-        return v;
-        stack<Node *>st;
-        st.push(root);
-        while(!st.empty())
+        while(root)
         {
-            Node *temp=st.top();
-            st.pop();
-            v.push_back(temp->data);
-            if(temp->left)
-            st.push(temp->left);
-            if(temp->right)
-            st.push(temp->right);
-            
+            //if root's left part is not exist
+            if(!root->right)
+            {
+                v.push_back(root->data);
+                root=root->left;
+            }
+            //if root's left part is exist
+            else
+            {
+                Node * curr=root->right;
+                while(curr->left && curr->left!=root)
+                {
+                    curr=curr->left;
+                }
+                //left subtree traverse or not
+                //if not traverse
+                if(curr->left==NULL)
+                {
+                    v.push_back(root->data);
+                    curr->left=root;
+                    root=root->right;
+                }
+                //if traverse
+                else
+                {
+                    curr->right=NULL;
+                    root=root->left;
+                }
+            }
         }
         reverse(v.begin(),v.end());
         return v;
