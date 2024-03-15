@@ -98,35 +98,38 @@ class Solution {
 public:
     vector<int> inOrder(Node* root)
     {
-        stack<Node *>s;
-        stack<bool>visited;
-        s.push(root);
-        visited.push(0);
         vector<int>v;
-        while(!s.empty())
+        while(root)
         {
-            Node *temp=s.top();
-            s.pop();
-            bool flag=visited.top();
-            visited.pop();
-            if(!flag)
+            //if root's left part is not exist
+            if(!root->left)
             {
-                if(temp->right)
-                {
-                    s.push(temp->right);
-                    visited.push(0);
-                }
-                s.push(temp);
-                visited.push(1);
-                if(temp->left)
-                {
-                    s.push(temp->left);
-                    visited.push(0);
-                }
-                
+                v.push_back(root->data);
+                root=root->right;
             }
+            //if root's left part is exist
             else
-            v.push_back(temp->data);
+            {
+                Node * curr=root->left;
+                while(curr->right && curr->right!=root)
+                {
+                    curr=curr->right;
+                }
+                //left subtree traverse or not
+                //if not traverse
+                if(curr->right==NULL)
+                {
+                    curr->right=root;
+                    root=root->left;
+                }
+                //if traverse
+                else
+                {
+                    curr->right=NULL;
+                    v.push_back(root->data);
+                    root=root->right;
+                }
+            }
         }
         return v;
     }
