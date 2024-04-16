@@ -10,9 +10,9 @@ public:
         {
             rem =n%2;
             rem=rem^1; //here we do XOR(^) operation for converting 0 into 1 and 1 into 0
-            n=n/2;
+            n/=2;
             ans=ans+rem*mul;
-            mul=mul*2;
+            mul*=2;
         }
         return ans;
     }
